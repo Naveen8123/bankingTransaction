@@ -15,13 +15,31 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("{accNum}")
+    @PostMapping("/{accNum}/deposite")
     public String deposite(@PathVariable int accNum, @RequestParam int amt,
                                            @RequestBody Transaction transaction){
         String deposite = transactionService.deposite(accNum, amt, transaction);
 
         return deposite;
     }
+
+    @PostMapping("/{accNum}/withdraw")
+    public String withdraw(@PathVariable int accNum, @RequestParam int amt,
+                           @RequestBody Transaction transaction){
+        String withdraw = transactionService.withdraw(accNum, amt, transaction);
+
+        return withdraw;
+    }
+
+    @GetMapping("/{accNum}/balance")
+    public String withdraw(@PathVariable int accNum,
+                           @RequestBody Transaction transaction){
+        String balance = transactionService.balance(accNum);
+
+        return balance;
+    }
+
+
 
 //    @PostMapping("{accNum}")
 //    public String withdraw(@PathVariable int accNum, @RequestParam int amt,

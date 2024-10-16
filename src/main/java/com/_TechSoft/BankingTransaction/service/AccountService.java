@@ -37,4 +37,15 @@ public class AccountService {
             throw new RuntimeException("Customer with ID " + customerId + " not found.");
         }
     }
+
+    public Optional<Account> accountById(int accId) {
+
+        Optional<Account> optionalAcc = accountRepository.findById(accId);
+
+        if (optionalAcc.isPresent()){
+            return optionalAcc;
+        }else{
+            throw  new RuntimeException("Customer if Not Found");
+        }
+    }
 }

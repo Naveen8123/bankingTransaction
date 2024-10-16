@@ -18,6 +18,9 @@ public class Customer {
     private String name;
     private String email;
     private String mobile;
+    private String address;
+    private long pincode;
+
 
     @OneToMany(mappedBy = "cutomerId",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Account> accounts;

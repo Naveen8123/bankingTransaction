@@ -5,10 +5,9 @@ import com._TechSoft.BankingTransaction.entity.Transaction;
 import com._TechSoft.BankingTransaction.repository.AccountRepository;
 import com._TechSoft.BankingTransaction.repository.TransactionRepo;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collections;
-import java.util.List;
+
+
 import java.util.Optional;
 
 @Service
@@ -23,22 +22,24 @@ public class TransactionService {
     }
 
     public String deposite(int accNum, int amt, Transaction transaction) {
+        
+        
 
         Optional<Account> accountOptional = accountRepository.findById(accNum);
 
         if(accountOptional.isPresent()){
             Account account= accountOptional.get();
+            // get balance of account
+
+            double balance = account.getBalance()+amt;
+
             transaction.setAccNumId(account);
             transaction.setAmt(amt);
             transaction.setCredit(true);
             transactionRepo.save(transaction);
-//            echo "# bankingTransaction" >> README.md
-//            git init
-//            git add README.md
-//            git commit -m "first commit"
-//            git branch -M main
-//            git remote add origin https://github.com/Naveen8123/bankingTransaction.git
-//            git push -u origin main
+            account.setBalance(balance);
+            accountRepository.save(account);
+
 
             return "deposited to account num "+ accNum + "with rs :" + amt;
         }
@@ -48,10 +49,52 @@ public class TransactionService {
 
     }
 
-//    public String withdraw(int accNum, int amt, Transaction transaction) {
-//        return null;
-//    }
-//
+    public String withdraw(int accNum, int amt, Transaction transaction) {
+
+
+
+        Optional<Account> accountOptional = accountRepository.findById(accNum);
+
+
+
+        if(accountOptional.isPresent()) {
+            Account account= accountOptional.get();
+            if(amt < account.getBalance()){
+
+                // get balance of account
+                double balance = account.getBalance()-amt;
+
+                transaction.setAccNumId(account);
+                transaction.setAmt(amt);
+                transaction.setCredit(false);
+                transactionRepo.save(transaction);
+                account.setBalance(balance);
+                accountRepository.save(account);
+
+
+                return "withdraw amount for "+ accNum + "with rs :" + amt;
+            } else {
+                throw new RuntimeException("insuficient amount");
+            }
+        } else {
+            throw new RuntimeException("account not found");
+        }
+
+    }
+
+    public String balance(int accId) {
+        Optional<Account> accountOptional = accountRepository.findById(accId);
+
+
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            return "balance :" + account.getBalance();
+
+        } else {
+            return "account not found";
+        }
+    }
+
 //    public String balance(int accNum) {
 //        Optional<Account> accountOptonal = accountRepository.findById(accNum);
 //        if(accountOptonal.isPresent()){

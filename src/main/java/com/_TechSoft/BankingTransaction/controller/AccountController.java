@@ -7,12 +7,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("account")
 public class AccountController {
 
     private AccountService accountService;
     private CustomerService customerService;
+
+    @GetMapping
+    public String welcome(){
+        return "welcome to invisible things";
+    }
 
     public AccountController(AccountService accountService,CustomerService customerService) {
         this.accountService = accountService;
@@ -41,6 +48,21 @@ public class AccountController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("{accId}")
+    public ResponseEntity<Optional<Account>> accountById(@PathVariable int accId){
+        try {
+
+            Optional<Account> account = accountService.accountById(accId);
+            return new ResponseEntity<>(account, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);  // If customer is not found, return 404
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+
     }
 
 }
