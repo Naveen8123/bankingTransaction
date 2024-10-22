@@ -6,6 +6,7 @@ import com._TechSoft.BankingTransaction.repository.AccountRepository;
 import com._TechSoft.BankingTransaction.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -21,6 +22,7 @@ public class CustomerService {
     }
 
     public Customer createCustomer(Customer customer) {
+        customer.setDate(LocalDateTime.now());
         Customer savedCustomer = customerRepository.save(customer);
 
         // Save associated accounts if they exist

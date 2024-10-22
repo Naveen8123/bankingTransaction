@@ -64,15 +64,24 @@ public class TransactionService {
                 // get balance of account
                 double balance = account.getBalance()-amt;
 
-                transaction.setAccNumId(account);
-                transaction.setAmt(amt);
-                transaction.setCredit(false);
-                transactionRepo.save(transaction);
-                account.setBalance(balance);
-                accountRepository.save(account);
+                if(balance<500){
+                    return "minimum 500 should be maitained";
+                }
+                else {
+
+                    // if balance is less than 500 dont process request
 
 
-                return "withdraw amount for "+ accNum + "with rs :" + amt;
+                    transaction.setAccNumId(account);
+                    transaction.setAmt(amt);
+                    transaction.setCredit(false);
+                    transactionRepo.save(transaction);
+                    account.setBalance(balance);
+                    accountRepository.save(account);
+
+
+                    return "withdraw amount for " + accNum + "with rs :" + amt;
+                }
             } else {
                 throw new RuntimeException("insuficient amount");
             }

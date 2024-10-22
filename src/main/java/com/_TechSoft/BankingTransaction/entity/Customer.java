@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -20,6 +22,7 @@ public class Customer {
     private String mobile;
     private String address;
     private long pincode;
+    private LocalDateTime date;
 
 
     @OneToMany(mappedBy = "cutomerId",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

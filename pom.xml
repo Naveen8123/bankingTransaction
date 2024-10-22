@@ -75,6 +75,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>banking-transaction</finalName>
 	</build>
 
 </project>

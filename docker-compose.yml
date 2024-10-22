@@ -1,0 +1,42 @@
+#version: '3.8'
+#
+#services:
+#  # MySQL Service
+#  mysql:
+#    image: mysql:8.0.36
+#    container_name: mysql-db
+#    environment:
+#      MYSQL_ROOT_PASSWORD: Naveen@8123
+#      MYSQL_DATABASE: bankingtrans
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: Naveen@8123
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    networks:
+#      - springboot-mysql-network
+#
+#  # Spring Boot Application Service
+#  app:
+#    build: .
+#    container_name: springboot-app
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bankingtrans
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: Naveen@8123
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - mysql
+#    networks:
+#      - springboot-mysql-network
+#
+## Volumes
+#volumes:
+#  mysql_data:
+#
+## Networks
+#networks:
+#  springboot-mysql-network:
+#    driver: bridge
